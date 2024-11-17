@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+       $this->middleware('auth')->except(['index', 'detail']); 
+    }
+
     public function index() {
 
         $articles = Article::latest()->paginate(5); 
@@ -81,7 +86,7 @@ class ArticleController extends Controller
         $article->category_id = request()->category_id;
         $article->save();
 
-        return redirect("/articles")->with("info", "Article updated");
+        return redirect("/articles/detail/$id")->with("info", "Article updated");
     }
 
 
