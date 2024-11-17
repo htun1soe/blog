@@ -15,5 +15,13 @@
                 <a href="{{ url("/articles/edit/$article->id") }}" class="btn btn-sm btn-outline-dark">Edit</a>
             </div>
         </div>
+        <ul class="list-group mt-4">
+            <li class="list-group-item active">
+                Comments ({{ count($article->comments) }})
+            </li>
+            @foreach ($article->comments as $comment)
+                {{ $comment->content }}
+            @endforeach
+        </ul>
     </div>
 @endsection
