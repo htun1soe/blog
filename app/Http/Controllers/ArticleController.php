@@ -69,25 +69,25 @@ class ArticleController extends Controller
         ]);   
     }
 
-    public function update($id) {
-        $validator = validator(request()->all(), [
-            'title' => 'required',
-            'body' => 'required',
-            'category_id' => 'required',
-        ]);
+        public function update($id) {
+            $validator = validator(request()->all(), [
+                'title' => 'required',
+                'body' => 'required',
+                'category_id' => 'required',
+            ]);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator);
+            if ($validator->fails()) {
+                return back()->withErrors($validator);
+            }
+
+            $article = Article::find($id);
+            $article->title = request()->title;
+            $article->body = request()->body;
+            $article->category_id = request()->category_id;
+            $article->save();
+
+            return redirect("/articles/detail/$id")->with("info", "Article updated");
         }
-
-        $article = Article::find($id);
-        $article->title = request()->title;
-        $article->body = request()->body;
-        $article->category_id = request()->category_id;
-        $article->save();
-
-        return redirect("/articles/detail/$id")->with("info", "Article updated");
-    }
 
 
     public function delete($id) {
